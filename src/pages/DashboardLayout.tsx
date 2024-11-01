@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, Lock, Bell, Palette, Home } from "lucide-react";
+import {
+  Menu,
+  X,
+  User,
+  Lock,
+  Bell,
+  Palette,
+  Home,
+  Package,
+} from "lucide-react";
 import { Outlet, NavLink } from "react-router-dom";
+import { WrapperDelete } from "@/components/WrapperDelete";
 
 export default function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const tabs = [
     { name: "home", label: "Home" },
+    { name: "product", label: "Products" },
     { name: "profile", label: "Profile" },
     { name: "account", label: "Account" },
     { name: "notifications", label: "Notifications" },
@@ -24,6 +35,7 @@ export default function DashboardLayout() {
       <aside
         className={`bg-white w-64 min-h-screen flex flex-col ${isSidebarOpen ? "block" : "hidden"} md:block`}
       >
+        <WrapperDelete />
         <div className="p-4 border-b">
           <h2 className="text-2xl font-semibold">Settings</h2>
         </div>
@@ -40,6 +52,9 @@ export default function DashboardLayout() {
                     }`
                   }
                 >
+                  {tab.name === "product" && (
+                    <Package className="mr-2 h-4 w-4" />
+                  )}
                   {tab.name === "home" && <Home className="mr-2 h-4 w-4" />}
                   {tab.name === "profile" && <User className="mr-2 h-4 w-4" />}
                   {tab.name === "account" && <Lock className="mr-2 h-4 w-4" />}

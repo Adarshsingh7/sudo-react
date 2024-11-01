@@ -4,6 +4,7 @@ import DashboardLayout from "./pages/DashboardLayout";
 import Account from "./pages/Account";
 import Profile from "./pages/Profile";
 import { DashboardPage } from "./pages/DashboardPage";
+import Product from "./pages/Product";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <DashboardPage />,
+      },
+      {
+        path: "product",
+        element: <Product />,
       },
     ],
   },
