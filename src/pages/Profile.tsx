@@ -19,12 +19,14 @@ const Profile: FC = () => {
     "/placeholder.svg?height=100&width=100",
   );
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result);
+        if (reader.result) {
+          setProfileImage(reader.result as string);
+        }
       };
       reader.readAsDataURL(file);
     }

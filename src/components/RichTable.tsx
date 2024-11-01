@@ -1,5 +1,5 @@
-import { useState } from "'react'";
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "'lucide-react'";
+import { useState } from "react";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -21,59 +21,59 @@ import {
 const initialData = [
   {
     id: 1,
-    name: "'John Doe'",
+    name: "John Doe",
     age: 30,
-    email: "'john@example.com'",
-    role: "'Developer'",
+    email: "john@example.com",
+    role: "Developer",
   },
   {
     id: 2,
-    name: "'Jane Smith'",
+    name: "Jane Smith",
     age: 28,
-    email: "'jane@example.com'",
-    role: "'Designer'",
+    email: "jane@example.com",
+    role: "Designer",
   },
   {
     id: 3,
-    name: "'Bob Johnson'",
+    name: "Bob Johnson",
     age: 35,
-    email: "'bob@example.com'",
-    role: "'Manager'",
+    email: "bob@example.com",
+    role: "Manager",
   },
   {
     id: 4,
-    name: "'Alice Brown'",
+    name: "Alice Brown",
     age: 26,
-    email: "'alice@example.com'",
-    role: "'Developer'",
+    email: "alice@example.com",
+    role: "Developer",
   },
   {
     id: 5,
-    name: "'Charlie Wilson'",
+    name: "Charlie Wilson",
     age: 32,
-    email: "'charlie@example.com'",
-    role: "'Designer'",
+    email: "charlie@example.com",
+    role: "Designer",
   },
   {
     id: 6,
-    name: "'Eva Davis'",
+    name: "Eva Davis",
     age: 29,
-    email: "'eva@example.com'",
-    role: "'Manager'",
+    email: "eva@example.com",
+    role: "Manager",
   },
   {
     id: 7,
-    name: "'Frank Miller'",
+    name: "Frank Miller",
     age: 31,
-    email: "'frank@example.com'",
-    role: "'Developer'",
+    email: "frank@example.com",
+    role: "Developer",
   },
 ];
 
-type SortDirection = "'asc'" | "'desc'" | null;
+type SortDirection = "asc" | "desc" | null;
 
 export function RichTable() {
-  const [data, setData] = useState(initialData);
+  const [data] = useState(initialData);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,24 +82,24 @@ export function RichTable() {
   const handleSort = (column: string) => {
     if (sortColumn === column) {
       setSortDirection(
-        sortDirection === "'asc'"
-          ? "'desc'"
-          : sortDirection === "'desc'"
+        sortDirection === "asc"
+          ? "desc"
+          : sortDirection === "desc"
             ? null
-            : "'asc'",
+            : "asc",
       );
     } else {
       setSortColumn(column);
-      setSortDirection("'asc'");
+      setSortDirection("asc");
     }
   };
 
   const sortedData = [...data].sort((a, b) => {
     if (!sortColumn || !sortDirection) return 0;
-    if (a[sortColumn] < b[sortColumn])
-      return sortDirection === "'asc'" ? -1 : 1;
-    if (a[sortColumn] > b[sortColumn])
-      return sortDirection === "'asc'" ? 1 : -1;
+    if (a[sortColumn as keyof typeof a] < b[sortColumn as keyof typeof b])
+      return sortDirection === "asc" ? -1 : 1;
+    if (a[sortColumn as keyof typeof a] > b[sortColumn as keyof typeof b])
+      return sortDirection === "asc" ? 1 : -1;
     return 0;
   });
 
@@ -112,9 +112,8 @@ export function RichTable() {
   const renderSortIcon = (column: string) => {
     if (sortColumn !== column)
       return <ChevronsUpDown className="ml-2 h-4 w-4" />;
-    if (sortDirection === "'asc'")
-      return <ChevronUp className="ml-2 h-4 w-4" />;
-    if (sortDirection === "'desc'")
+    if (sortDirection === "asc") return <ChevronUp className="ml-2 h-4 w-4" />;
+    if (sortDirection === "desc")
       return <ChevronDown className="ml-2 h-4 w-4" />;
     return <ChevronsUpDown className="ml-2 h-4 w-4" />;
   };
@@ -142,28 +141,28 @@ export function RichTable() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">
-                <Button variant="ghost" onClick={() => handleSort("'id'")}>
-                  ID {renderSortIcon("'id'")}
+                <Button variant="ghost" onClick={() => handleSort("id")}>
+                  ID {renderSortIcon("id")}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant="ghost" onClick={() => handleSort("'name'")}>
-                  Name {renderSortIcon("'name'")}
+                <Button variant="ghost" onClick={() => handleSort("name")}>
+                  Name {renderSortIcon("name")}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant="ghost" onClick={() => handleSort("'age'")}>
-                  Age {renderSortIcon("'age'")}
+                <Button variant="ghost" onClick={() => handleSort("age")}>
+                  Age {renderSortIcon("age")}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant="ghost" onClick={() => handleSort("'email'")}>
-                  Email {renderSortIcon("'email'")}
+                <Button variant="ghost" onClick={() => handleSort("email")}>
+                  Email {renderSortIcon("email")}
                 </Button>
               </TableHead>
               <TableHead className="text-right">
-                <Button variant="ghost" onClick={() => handleSort("'role'")}>
-                  Role {renderSortIcon("'role'")}
+                <Button variant="ghost" onClick={() => handleSort("role")}>
+                  Role {renderSortIcon("role")}
                 </Button>
               </TableHead>
             </TableRow>

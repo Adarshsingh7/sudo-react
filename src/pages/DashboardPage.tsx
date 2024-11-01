@@ -216,9 +216,9 @@ export function DashboardPage() {
                       <Badge
                         variant={
                           transaction.status === "Completed"
-                            ? "success"
+                            ? "default"
                             : transaction.status === "Pending"
-                              ? "warning"
+                              ? "secondary"
                               : "destructive"
                         }
                       >
