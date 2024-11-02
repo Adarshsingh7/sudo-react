@@ -3,7 +3,7 @@ import AppLayout from "./pages/AppLayout";
 import DashboardLayout from "./pages/DashboardLayout";
 import Account from "./pages/Account";
 import Profile from "./pages/Profile";
-import { DashboardPage } from "./pages/DashboardPage";
+import DashboardPage from "./pages/DashboardPage";
 import Product from "./pages/Product";
 
 const router = createBrowserRouter([

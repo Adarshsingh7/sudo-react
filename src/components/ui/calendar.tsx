@@ -46,8 +46,8 @@ function Calendar({
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
-        day_selected:
-          "bg-zinc-900 text-zinc-50 hover:bg-zinc-900 hover:text-zinc-50 focus:bg-zinc-900 focus:text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50 dark:hover:text-zinc-900 dark:focus:bg-zinc-50 dark:focus:text-zinc-900",
+        // day_selected:
+        //   "bg-zinc-900 text-zinc-50 hover:bg-zinc-900 hover:text-zinc-50 focus:bg-zinc-900 focus:text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50 dark:hover:text-zinc-900 dark:focus:bg-zinc-50 dark:focus:text-zinc-900",
         day_today:
           "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50",
         day_outside:

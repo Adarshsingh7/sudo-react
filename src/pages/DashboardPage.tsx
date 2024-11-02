@@ -26,8 +26,25 @@ import {
 } from "recharts";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import {
+  DollarSign,
+  Users,
+  ShoppingCart,
+  Activity,
+  Settings,
+  ChevronRight,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
-export function DashboardPage() {
+export default function DashboardPage() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+
   // Sample data for charts and tables
   const revenueData = [
     { month: "Jan", revenue: 0 },
@@ -39,11 +56,11 @@ export function DashboardPage() {
   ];
 
   const productData = [
-    { name: "Product A", sales: 100 },
-    { name: "Product B", sales: 200 },
-    { name: "Product C", sales: 150 },
-    { name: "Product D", sales: 300 },
-    { name: "Product E", sales: 250 },
+    { name: "A", sales: 100 },
+    { name: "B", sales: 200 },
+    { name: "C", sales: 150 },
+    { name: "D", sales: 300 },
+    { name: "E", sales: 250 },
   ];
 
   const recentTransactions = [
@@ -54,30 +71,34 @@ export function DashboardPage() {
   ];
 
   return (
-    <div className="p-4 space-y-6">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+    <div className={`p-4 space-y-6 ${darkMode ? "dark" : ""}`}>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="dark-mode"
+              checked={darkMode}
+              onCheckedChange={setDarkMode}
+            />
+            <Label htmlFor="dark-mode">Dark Mode</Label>
+          </div>
+          <Button variant="outline" size="icon">
+            <Settings className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
 
       {/* Quick Stats */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-zinc-500 dark:text-zinc-400"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 7h5a3.5 1 7H6" />
-            </svg>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-muted-foreground">
               +20.1% from last month
             </p>
           </CardContent>
@@ -85,24 +106,11 @@ export function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-zinc-500 dark:text-zinc-400"
-            >
-              <path d="M16 21v-2a4 4 0 0-4-4H6a4 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0-3-3.87M16 3.13a4 1 7.75" />
-            </svg>
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-muted-foreground">
               +180.1% from last month
             </p>
           </CardContent>
@@ -110,23 +118,11 @@ export function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Sales</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-zinc-500 dark:text-zinc-400"
-            >
-              <rect width="20" height="14" x="2" y="5" rx="2" />
-              <path d="M2 10h20" />
-            </svg>
+            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-muted-foreground">
               +19% from last month
             </p>
           </CardContent>
@@ -134,22 +130,11 @@ export function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-zinc-500 dark:text-zinc-400"
-            >
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
+            <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-muted-foreground">
               +201 since last hour
             </p>
           </CardContent>
@@ -171,7 +156,7 @@ export function DashboardPage() {
                 <Line
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#8884d8"
+                  stroke="black"
                   strokeWidth={2}
                 />
               </LineChart>
@@ -184,7 +169,32 @@ export function DashboardPage() {
             <CardDescription>Your schedule for the next weeks</CardDescription>
           </CardHeader>
           <CardContent>
-            <Calendar className="w-full" fromDate={new Date()} />
+            <div className="flex justify-start gap-2">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="rounded-md border"
+              />
+              <TimeAndLocation />
+            </div>
+            <div className="mt-4">
+              <h4 className="text-sm font-semibold">Upcoming Event</h4>
+              <p className="text-sm">Team Meeting at 2:00 PM</p>
+              <div className="flex items-center justify-between mt-2">
+                <Button variant="ghost" size="sm">
+                  View All <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor="notifications">Notifications</Label>
+                  <Switch
+                    id="notifications"
+                    checked={notificationsEnabled}
+                    onCheckedChange={setNotificationsEnabled}
+                  />
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -242,52 +252,112 @@ export function DashboardPage() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="sales" fill="#8884d8" />
+                <Bar dataKey="sales" fill="hsl(var(--primary))" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      {/* Team Members */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Team Members</CardTitle>
-          <CardDescription>Your project collaborators</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-4">
-            <Avatar>
-              <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
-                alt="@johndoe"
-              />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
-                alt="@janesmith"
-              />
-              <AvatarFallback>JS</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
-                alt="@bobjonhson"
-              />
-              <AvatarFallback>BJ</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
-                alt="@alicebrown"
-              />
-              <AvatarFallback>AB</AvatarFallback>
-            </Avatar>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Team Members and Project Progress */}
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Team Members</CardTitle>
+            <CardDescription>Your project collaborators</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-4">
+              <Avatar>
+                <AvatarImage
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="@johndoe"
+                />
+                <AvatarFallback>JD</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="@janesmith"
+                />
+                <AvatarFallback>JS</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="@bobjonhson"
+                />
+                <AvatarFallback>BJ</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="@alicebrown"
+                />
+                <AvatarFallback>AB</AvatarFallback>
+              </Avatar>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Project Progress</CardTitle>
+            <CardDescription>
+              Current status of ongoing projects
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium">Website Redesign</span>
+                  <span className="text-sm font-medium">75%</span>
+                </div>
+                <Progress value={75} />
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium">
+                    Mobile App Development
+                  </span>
+                  <span className="text-sm font-medium">40%</span>
+                </div>
+                <Progress value={40} />
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium">
+                    Marketing Campaign
+                  </span>
+                  <span className="text-sm font-medium">60%</span>
+                </div>
+                <Progress value={60} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
+
+const TimeAndLocation = () => {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex-1 bg-zinc-900 rounded-lg">
+      <div className="text-white text-center p-4">
+        <p className="text-lg font-bold">{time.toLocaleTimeString()}</p>
+        <p className="text-sm">India</p>
+      </div>
+    </div>
+  );
+};
