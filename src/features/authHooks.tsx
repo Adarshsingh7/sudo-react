@@ -17,7 +17,7 @@ const useIsAuthenticated = () => {
   const { data, refetch, isFetching, isError } = useQuery<User>({
     queryKey: ["user"],
     queryFn: () => auth.isAuthenticated(),
-    staleTime: 1000 * 60 * 5,
+    retry: false,
   });
 
   return { user: data, refetch, isPending: isFetching, isError };

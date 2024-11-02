@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage";
 import Product from "./pages/Product";
 import AuthFormComponent from "./pages/AuthPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Protect from "./components/Protect";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <Protect>
+        <DashboardLayout />
+      </Protect>
+    ),
     children: [
       {
         path: "account",

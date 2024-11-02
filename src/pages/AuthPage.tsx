@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft, EyeIcon, EyeOffIcon } from "lucide-react";
+import { ChevronLeft, EyeIcon, EyeOffIcon, House } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useHandleLogin, useIsAuthenticated } from "@/features/authHooks";
 
@@ -58,11 +58,18 @@ export default function AuthPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <div
-        className="absolute top-5 left-5 flex justify-center align-middle cursor-pointer"
+        className="absolute top-5 left-5 flex justify-between align-middle cursor-pointer"
         onClick={() => navigate(-1)}
       >
         <ChevronLeft />
         <span className="border-opacity-20 hover:underline">back</span>
+      </div>
+      <div
+        className="absolute top-5 right-5 flex justify-between align-middle cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <House />
+        {/* <span className="border-opacity-20 hover:underline">back</span> */}
       </div>
       <Tabs defaultValue="login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
