@@ -5,8 +5,14 @@ import Account from "./pages/Account";
 import Profile from "./pages/Profile";
 import DashboardPage from "./pages/DashboardPage";
 import Product from "./pages/Product";
+import AuthFormComponent from "./pages/AuthPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
+  {
+    path: "login",
+    element: <AuthFormComponent />,
+  },
   {
     path: "/",
     element: <AppLayout />,
@@ -41,8 +47,21 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      {" "}
+      <RouterProvider router={router} />{" "}
+    </QueryClientProvider>
+  );
 }
 
 export default App;

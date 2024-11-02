@@ -28,72 +28,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useDialog } from "@/context/DialogContext";
-import { toast } from "sonner";
-
-// Sample data
-const initialData = [
-  {
-    id: 1,
-    name: "John Doe",
-    age: 30,
-    email: "john@example.com",
-    role: "Developer",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    age: 28,
-    email: "jane@example.com",
-    role: "Designer",
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    age: 35,
-    email: "bob@example.com",
-    role: "Manager",
-  },
-  {
-    id: 4,
-    name: "Alice Brown",
-    age: 26,
-    email: "alice@example.com",
-    role: "Developer",
-  },
-  {
-    id: 5,
-    name: "Charlie Wilson",
-    age: 32,
-    email: "charlie@example.com",
-    role: "Designer",
-  },
-  {
-    id: 6,
-    name: "Eva Davis",
-    age: 29,
-    email: "eva@example.com",
-    role: "Manager",
-  },
-  {
-    id: 7,
-    name: "Frank Miller",
-    age: 31,
-    email: "frank@example.com",
-    role: "Developer",
-  },
-];
 
 type SortDirection = "asc" | "desc" | null;
 
-// interface RichTableProps {
-//   initialData: any;
-// }
+interface RichTableProps {
+  initialData: any[];
+  mapping: { label: string; field: string }[];
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+  label: string;
+}
 
-export default function RichTable() {
-  const { openDeleteDialog } = useDialog();
-
-  const [data, setData] = useState(initialData);
+export default function RichTable({
+  initialData,
+  mapping,
+  onEdit,
+  onDelete,
+  label,
+}: RichTableProps) {
+  const data = initialData;
 
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
@@ -107,7 +60,7 @@ export default function RichTable() {
   useEffect(() => {
     const filtered = data.filter((item) =>
       Object.values(item).some((val) =>
-        val.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+        String(val).toLowerCase().includes(searchTerm.toLowerCase()),
       ),
     );
     setFilteredData(filtered);
@@ -153,35 +106,12 @@ export default function RichTable() {
     return <ChevronsUpDown className="ml-2 h-4 w-4" />;
   };
 
-  const handleEdit = (id: number) => {
-    console.log(`Edit item with id: ${id}`);
-  };
-
-  const handleDelete = (id: number) => {
-    openDeleteDialog(() => {
-      setData(data.filter((item) => item.id !== id));
-      toast.success("Employee deleted successfully!");
-    });
-  };
-
-  const handleAddRecord = () => {
-    const newId = Math.max(...data.map((item) => item.id)) + 1;
-    const newRecord = {
-      id: newId,
-      name: `New Employee ${newId}`,
-      age: 25,
-      email: `employee${newId}@example.com`,
-      role: "New Role",
-    };
-    setData([...data, newRecord]);
-  };
+  const handleAddRecord = () => {};
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">
-          Employee Management
-        </CardTitle>
+        <CardTitle className="text-2xl font-bold">{label}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex justify-between items-center">
@@ -218,51 +148,17 @@ export default function RichTable() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSort("id")}
-                    className="font-bold"
-                  >
-                    ID {renderSortIcon("id")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSort("name")}
-                    className="font-bold"
-                  >
-                    Name {renderSortIcon("name")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSort("age")}
-                    className="font-bold"
-                  >
-                    Age {renderSortIcon("age")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSort("email")}
-                    className="font-bold"
-                  >
-                    Email {renderSortIcon("email")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSort("role")}
-                    className="font-bold"
-                  >
-                    Role {renderSortIcon("role")}
-                  </Button>
-                </TableHead>
+                {mapping.map((el) => (
+                  <TableHead className="">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort(el.field)}
+                      className="font-bold"
+                    >
+                      {el.label} {renderSortIcon(el.field)}
+                    </Button>
+                  </TableHead>
+                ))}
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -282,7 +178,7 @@ export default function RichTable() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleEdit(item.id)}
+                        onClick={() => onEdit(item.id)}
                       >
                         <Edit className="h-4 w-4" />
                         <span className="sr-only">Edit</span>
@@ -290,7 +186,7 @@ export default function RichTable() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => onDelete(item.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                         <span className="sr-only">Delete</span>

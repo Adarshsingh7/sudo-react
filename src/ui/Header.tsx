@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -90,18 +91,18 @@ export default function Header() {
             )}
           </div>
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <a
-              href="#"
+            <Link
+              to="/login"
               className="inline-block rounded-md border border-transparent bg-zinc-800 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75 transition duration-150 ease-in-out"
             >
               Sign in
-            </a>
-            <a
-              href="#"
+            </Link>
+            {/* <Link
+              to="/login"
               className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-zinc-800 hover:bg-gray-50 transition duration-150 ease-in-out"
             >
               Sign up
-            </a>
+            </Link> */}
           </div>
           <div className="flex lg:hidden">
             <button
