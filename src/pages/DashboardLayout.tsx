@@ -10,6 +10,7 @@ import {
   Home,
   Package,
   LogOut,
+  Compass,
 } from "lucide-react";
 import { Outlet, NavLink } from "react-router-dom";
 import { WrapperDelete } from "@/components/WrapperDelete";
@@ -26,8 +27,9 @@ export default function DashboardLayout() {
     { name: "product", label: "Products" },
     { name: "profile", label: "Profile" },
     { name: "account", label: "Account" },
-    { name: "notifications", label: "Notifications" },
-    { name: "appearance", label: "Appearance" },
+    { name: "map", label: "Maps" },
+    // { name: "notifications", label: "Notifications" },
+    // { name: "appearance", label: "Appearance" },
   ];
 
   const toggleSidebar = () => {
@@ -63,6 +65,7 @@ export default function DashboardLayout() {
                   {tab.name === "home" && <Home className="mr-2 h-4 w-4" />}
                   {tab.name === "profile" && <User className="mr-2 h-4 w-4" />}
                   {tab.name === "account" && <Lock className="mr-2 h-4 w-4" />}
+                  {tab.name === "map" && <Compass className="mr-2 h-4 w-4" />}
                   {tab.name === "notifications" && (
                     <Bell className="mr-2 h-4 w-4" />
                   )}

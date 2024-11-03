@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Protect from "./components/Protect";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Wrapper from "./pages/Wrapper";
+import InteractiveMap from "./pages/InteractiveMap";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "product",
         element: <Product />,
+      },
+      {
+        path: "map",
+        element: <InteractiveMap />,
       },
     ],
   },
