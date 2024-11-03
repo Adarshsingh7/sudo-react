@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/card";
 import { ChevronLeft, EyeIcon, EyeOffIcon, House } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useHandleLogin, useIsAuthenticated } from "@/features/authHooks";
+import { useHandleLogin } from "@/features/authHooks";
+import { useQuery } from "@tanstack/react-query";
 
 type SigninFormValues = {
   email: string;
@@ -33,7 +34,10 @@ export default function AuthPage() {
   const { register: signupRegister, handleSubmit: signupSubmitHandler } =
     useForm<SignUpFormValues>();
   const { login } = useHandleLogin();
-  const { user, isPending: loadingAuthenticatedStatus } = useIsAuthenticated();
+  // const { user, isPending: loadingAuthenticatedStatus } = useIsAuthenticated();
+  const { data: user, isLoading: loadingAuthenticatedStatus } = useQuery({
+    queryKey: ["user"],
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();

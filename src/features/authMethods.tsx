@@ -55,10 +55,15 @@ class Auth {
   };
 
   isAuthenticated = async () => {
-    const currentUser = await this.api.get("/me", {
-      headers: { Authorization: `Bearer ${this.getToken()}` },
-    });
-    return currentUser.data.user;
+    try {
+      const currentUser = await this.api.get("/me", {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      });
+      return currentUser.data.user;
+    } catch (error) {
+      console.error("Error checking authentication status:", error);
+      return null;
+    }
   };
 
   logout = async () => {

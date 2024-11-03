@@ -1,3 +1,5 @@
+/** @format */
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
 import DashboardLayout from "./pages/DashboardLayout";
@@ -8,6 +10,8 @@ import Product from "./pages/Product";
 import AuthFormComponent from "./pages/AuthPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Protect from "./components/Protect";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Wrapper from "./pages/Wrapper";
 
 const router = createBrowserRouter([
   {
@@ -63,8 +67,10 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {" "}
-      <RouterProvider router={router} />{" "}
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Wrapper>
+        <RouterProvider router={router} />
+      </Wrapper>
     </QueryClientProvider>
   );
 }

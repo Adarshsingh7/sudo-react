@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { auth } from "./authMethods";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 type User = ReturnType<typeof auth.isAuthenticated>;
 
@@ -14,13 +15,13 @@ interface Error {
 
 // Hook for checking if the user is authenticated
 const useIsAuthenticated = () => {
-  const { data, refetch, isFetching, isError } = useQuery<User>({
+  const { data, refetch, isPending, isError } = useQuery<User>({
     queryKey: ["user"],
     queryFn: () => auth.isAuthenticated(),
     retry: false,
   });
 
-  return { user: data, refetch, isPending: isFetching, isError };
+  return { user: data, refetch, isPending: isPending, isError };
 };
 
 // Hook for logging in
@@ -48,4 +49,24 @@ const useHandleLogin = () => {
   return { login: mutate, isPending, isError };
 };
 
-export { useHandleLogin, useIsAuthenticated };
+// Hook for logging out
+const useHandleLogout = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { mutate, isPending, isError } = useMutation({
+    mutationFn: () => auth.logout(),
+    onSuccess: () => {
+      toast.success("Logged out successfully");
+      queryClient.removeQueries({ queryKey: ["user"] });
+      navigate("/");
+    },
+    onError: (error: Error) => {
+      toast.error(error.response?.data.message);
+    },
+  });
+
+  return { logout: mutate, isPending, isError };
+};
+
+export { useHandleLogin, useIsAuthenticated, useHandleLogout };

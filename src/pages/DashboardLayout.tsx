@@ -9,12 +9,17 @@ import {
   Palette,
   Home,
   Package,
+  LogOut,
 } from "lucide-react";
 import { Outlet, NavLink } from "react-router-dom";
 import { WrapperDelete } from "@/components/WrapperDelete";
+import { TooltipWrapper } from "@/components/TooltipWrapper";
+import { useHandleLogout, useIsAuthenticated } from "@/features/authHooks";
 
 export default function DashboardLayout() {
+  useIsAuthenticated();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const logout = useHandleLogout();
 
   const tabs = [
     { name: "home", label: "Home" },
@@ -76,9 +81,18 @@ export default function DashboardLayout() {
       <div className="flex-grow overflow-auto">
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-900">
-              User Settings
-            </h1>
+            <div className="flex justify-between w-full">
+              <h1 className="text-2xl font-semibold text-gray-900">
+                User Settings
+              </h1>
+              <TooltipWrapper message="logout">
+                <LogOut
+                  size={18}
+                  className="cursor-pointer"
+                  onClick={() => logout.logout()}
+                />
+              </TooltipWrapper>
+            </div>
             <Button
               variant="ghost"
               size="icon"

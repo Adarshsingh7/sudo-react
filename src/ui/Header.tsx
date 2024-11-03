@@ -35,12 +35,12 @@ export default function Header() {
             <a href="#" className="flex items-center">
               <span className="sr-only">Your Company</span>
               <img
-                src="/vercel.webp"
+                src="/vercel.svg"
                 alt="Your Company Logo"
                 className="h-8 w-auto text-zinc-800 sm:h-10"
               />
               <span className="ml-2 text-lg font-bold text-gray-900 sm:text-xl">
-                YourBrand
+                Fast React
               </span>
             </a>
           </div>
